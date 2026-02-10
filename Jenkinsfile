@@ -11,14 +11,15 @@ pipeline {
 
         stage('Build Images') {
             steps {
-                bat 'docker compose build'
+                bat '"C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.exe" compose build'
             }
         }
 
         stage('Deploy Containers') {
             steps {
-                bat 'docker compose up -d'
+                bat '"C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.exe" compose up -d'
             }
         }
     }
 }
+
