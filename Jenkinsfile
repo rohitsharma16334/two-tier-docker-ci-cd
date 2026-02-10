@@ -5,19 +5,27 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                checkout scm
+                git branch: 'main',
+                    url: 'https://github.com/rohitsharma16334/two-tier-docker-ci-cd.git'
             }
         }
 
         stage('Build Images') {
             steps {
-                bat '"C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.exe" compose build'
+                sh '''
+                cd /mnt/wsl/Ubuntu/home/rohit/two-tier-ci-cd
+                docker compose build
+                '''
             }
         }
 
         stage('Deploy Containers') {
             steps {
-                bat '"C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.exe" compose up -d'
+                sh '''
+                cd /mnt/wsl/Ubuntu/home/rohit/two-tier-ci-cd
+                docker compose down || true
+                docker compose up -d
+                '''
             }
         }
     }
